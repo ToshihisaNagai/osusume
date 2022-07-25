@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Dashboard\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -36,14 +36,21 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admins')->except('logout');
     }
-    
-    protected function authenticated(Request $request, $user)
-      {
-          if($user->deleted_flag) {
-              Auth::logout();
-              return redirect()->route('login')->with('warning', '退会済みのアカウントです！');;
-          }
-      }
+
+    protected function guard()
+    {
+        return Auth::guard('admins');
+    }
+
+    public function showLoginForm()
+    {
+        return view('dashboard.auth.login');
+    }
+
+    public function loggedOut(Request $request)
+    {
+        return redirect('dashboard.login');
+    }
 }
