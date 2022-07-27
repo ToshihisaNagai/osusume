@@ -51,23 +51,26 @@
             <tbody>
                 @foreach($products as $product)
                 <tr>
-                    <th scope="row">{{ $product->id }}</td>
-                    <td><img src="{{ asset('img/dummy.png')}}" class="img-fluid w-80"></td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->category["name"] }}</td>
-                    <td>{{ $product->category["major_category_name"] }}</td>
+                    <th class="align-middle" scope="row">{{ $product->id }}</td>
                     <td>
-                        <a href="/dashboard/products/{{ $product->id }}/edit" class="dashboard-edit-link">編集</a>
+                    @if ($product->image !== "")
+                    <img src="{{ asset('storage/products/'.$product->image) }}" class="w-80 img-fluid">
+                    @else
+                    <img src="{{ asset('img/dummy.png')}}" class="w-80 img-fuild">
+                    @endif
                     </td>
-                    <td>
-                        <a href="/dashboard/products/{{ $product->id }}" onclick="event.preventDefault(); document.getElementById('logout-form{{ $product->id }}').submit();" class="dashboard-delete-link">
-                            削除
-                        </a>
-
-                        <form id="logout-form{{ $product->id }}" action="/dashboard/products/{{ $product->id }}" method="POST" style="display: none;">
+                    <td class="align-middle">{{ $product->name }}</td>
+                    <td class="align-middle">{{ $product->price }}</td>
+                    <td class="align-middle">{{ $product->category["name"] }}</td>
+                    <td class="align-middle">{{ $product->category["major_category_name"] }}</td>
+                    <td class="align-middle">
+                        <a href="/dashboard/products/{{ $product->id }}/edit" class="btn dashboard-edit-link">編集</a>
+                    </td>
+                    <td class="align-middle">
+                        <form action="/dashboard/products/{{ $product->id }}" method="POST">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn dashboard-delete-link">削除</button>
                         </form>
                     </td>
                 </tr>

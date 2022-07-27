@@ -15,7 +15,10 @@
         <label class="samuraimart-sidebar-category-label">
             <a href="/dashboard/categories">カテゴリ管理</a>
         </label>
-        <label class="samuraimart-sidebar-category-label">CSV一括登録</label>
+        
+        <label class="samuraimart-sidebar-category-label">
+            <a href="/dashboard/products/import/csv">CSV一括登録</a>
+        </label>
     </div>
 
     <h2>顧客管理</h2>
